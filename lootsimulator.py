@@ -12,6 +12,9 @@
 # TODO 
 #
 # consider making players and items into dicts of dicts
+# add a read raid data from file feature
+# fix the error handling during the manual mode menu navigation
+#
 
 
 import numpy as np
@@ -170,13 +173,18 @@ def numtoclass(key) :
 def assignclasses(numbers) :
 
     it = 0
-    player = 0
+    playerid = 0
     while it < len (numbers) : 
         number = numbers[it]
         currentclass = numtoclass(it)
         while number > 0 : 
             
-            players[player]['class'] = currentclass
+            players[playerid]['class'] = currentclass
+            
+            playerid += 1
+            number -= 1
+
+        it += 1
 
 ## global constants
 
@@ -270,41 +278,86 @@ if modeselect == 'auto' :
 elif modeselect == 'manual' :
     print ('initializing raid setup... \n\nplease provide the number of')
     print ('druids: ')
-    ndruid = input()
+    ndruid = int(input())
     print ('hunters: ')
-    nhunter = input()
-    print ('names')
-    nmage = input()
-    print ('paladins')
-    npaladin = input()
-    print ('priests')
-    npriest = input()
-    print ('rogues')
-    nrogue = input()
-    print ('shamans')
-    nshaman = input()
-    print ('warlocks')
-    nwarlock = input()
-    print ('warriors')
-    nwarrior = input()
+    nhunter = int(input())
+    print ('mages: ')
+    nmage = int(input())
+    print ('paladins: ')
+    npaladin = int(input())
+    print ('priests: ')
+    npriest = int(input())
+    print ('rogues: ')
+    nrogue = int(input())
+    print ('shamans: ')
+    nshaman = int(input())
+    print ('warlocks: ')
+    nwarlock = int(input())
+    print ('warriors: ')
+    nwarrior = int(input())
 
     classdistribution = [ndruid, nhunter, nmage, npaladin, npriest, nrogue, nshaman, nwarlock, nwarrior]
     nraiders = sum(classdistribution)
 
-    if (nraiders > 25)
+    if (nraiders > 25) :
          print ('too many raiders provided, exiting')
-         break
+         exit()
     
     assignclasses (classdistribution)
 
+    modswitch = True 
+    while modswitch :
+        print ("inspect and modify roster (enter 'help' for guidance), enter 'finished' to continue")
+        choise = input()
+        if choise == 'help' : 
+            print ('list of supported functionalities:')
+            print ("* enter 'listraid' to print raid composition")
+            print ("* enter 'modraid' to modify raid composition")
+            print ("\tenter raider-id (0-24) to modify raider, available options are:")
+            print ("\t'name'")
+            print ("\t'class'")
+            print ("\t'ep'")
+            print ("\t'gp'")
+            print ("\t'pr'")
+            print ("\t'note'")
+            print ("\texample of suggested usage: set tank status with 'note', or set witty names with 'name' for a more wholesome experience")
+            print ("* enter 'finished' to continue")
+        elif choise == 'listraid' : 
+            for player in players : 
+                print (player)
+        elif choise == 'modraid' :
+            choise2 = True
+            while choise2 :
+                print ("provide raider-id (0-24), please enter 'continue' when finished: ")
+                raiderid = input()
+                if raiderid == 'continue' :
+                    choise2 = False
+                    continue 
+                
+                raiderid = int(raiderid)
+                if raiderid >= 0 and raiderid <= 24 :
+                
+                    print ("what would you like to change ('name','class','ep','gp','pr','note')?")
+                    changethis = str(input())
+                    print ("current value is: {}, what would you like to change it to?".format(players[raiderid][changethis]))
+                    changeto = input()
+                    players[raiderid][changethis] = changeto
+                    print ("okay, the new value is: {}".format(players[raiderid][changethis]))
+                else : 
+                    print ('bad raider-id input, exiting')
+                    continue
 
+        elif choise == 'finished' :
+            modswitch = False
+        else : 
+            print ("unsupported input, enter 'help' for available commands")
     
-    print ('you provided')
 
+    print ('raid composition successful! \ninitiating raid interface...')
 
 else : 
     print ('unknown operation mode specified, exiting')
-
+    exit()
 
 
 
