@@ -23,7 +23,7 @@ import json
 
 ## objects
 
-playerkeys = ['id','name','class','ep','gp','pr']
+playerkeys = ['id','name','class','ep','gp','pr','note']
 
 nplayers = 25
 players = []
@@ -147,6 +147,37 @@ def generatelooters(players) :
 
     return out
 
+def numtoclass(key) :
+    if key == 0 :
+        return 'druid'
+    elif key == 1:
+        return 'hunter'
+    elif key == 2:
+        return 'mage'
+    elif key == 3:
+        return 'paladin'
+    elif key == 4:
+        return 'priest'
+    elif key == 5:
+        return 'rogue'
+    elif key == 6:
+        return 'shaman'
+    elif key == 7:
+        return 'warlock'
+    elif key == 8:
+        return 'warrior'
+
+def assignclasses(numbers) :
+
+    it = 0
+    player = 0
+    while it < len (numbers) : 
+        number = numbers[it]
+        currentclass = numtoclass(it)
+        while number > 0 : 
+            
+            players[player]['class'] = currentclass
+
 ## global constants
 
 epkara = 150        # model parameter, set by user
@@ -166,74 +197,114 @@ epvector = [epstart]
 gpvector = [gpstart]
 prvector = [prstart]
 
+print("specify mode: 'auto' or 'manual'")
+
+modeselect = input()
 
 ### automatic mode
-
-runs = 5
-cprog = 1.5                 # progress factor
-kills = 1
-maxkills = 2
-
-for run in range(runs) :     
+if modeselect == 'auto' :
     
-    # generate a progressive random amount of kills
-    kills = round(0.5*runs + np.random.normal(0,1))
-    if kills < 0 :
-        kills = 0
-    elif kills > maxkills :
-        kills = maxkills
+    runs = 5
+    cprog = 1.5                 # progress factor
+    kills = 1
+    maxkills = 2
     
-    for kill in range(kills) :
+    for run in range(runs) :     
         
-        # generate drops
-        boss = lootdata[kill]
-        drops = generatedrops(boss)
-
-        # generate looters
-        looters = generatelooters(players)
-       
-        # distribute loot
-        for looter in looters :
-            counter = 0
-            lootgp = cgp(drops[counter])
-            players[looter['id']]['gp'] += lootgp
-            counter += 1
-
-        # update ep
+        # generate a progressive random amount of kills
+        kills = round(0.5*runs + np.random.normal(0,1))
+        if kills < 0 :
+            kills = 0
+        elif kills > maxkills :
+            kills = maxkills
+        
+        for kill in range(kills) :
+            
+            # generate drops
+            boss = lootdata[kill]
+            drops = generatedrops(boss)
+    
+            # generate looters
+            looters = generatelooters(players)
+           
+            # distribute loot
+            for looter in looters :
+                counter = 0
+                lootgp = cgp(drops[counter])
+                players[looter['id']]['gp'] += lootgp
+                counter += 1
+    
+            # update ep
+            for player in players :
+                player['ep'] += epkara
+    
+            # update pr
+            for player in players : 
+                player['pr'] = player['ep'] / player['gp']
+    
+        # decay ep and gp
         for player in players :
-            player['ep'] += epkara
-
+            player['ep'] *= 0.9
+        
+        for player in players :
+            player['ep'] *= 0.9
+    
         # update pr
         for player in players : 
             player['pr'] = player['ep'] / player['gp']
-
-    # decay ep and gp
-    for player in players :
-        player['ep'] *= 0.9
     
-    for player in players :
-        player['ep'] *= 0.9
-
-    # update pr
-    for player in players : 
-        player['pr'] = player['ep'] / player['gp']
-
-    currenteps = []
-    currentgps = []
-    currentprs = []
-
-    for player in players : 
-        currenteps.append(player['ep'])
-        currentgps.append(player['gp'])
-        currentprs.append(player['pr'])
-
-    epvector.append(currenteps)
-    gpvector.append(currentgps)
-    prvector.append(currentprs)
-
-            
+        currenteps = []
+        currentgps = []
+        currentprs = []
+    
+        for player in players : 
+            currenteps.append(player['ep'])
+            currentgps.append(player['gp'])
+            currentprs.append(player['pr'])
+    
+        epvector.append(currenteps)
+        gpvector.append(currentgps)
+        prvector.append(currentprs)
 
 ### manual mode
+elif modeselect == 'manual' :
+    print ('initializing raid setup... \n\nplease provide the number of')
+    print ('druids: ')
+    ndruid = input()
+    print ('hunters: ')
+    nhunter = input()
+    print ('names')
+    nmage = input()
+    print ('paladins')
+    npaladin = input()
+    print ('priests')
+    npriest = input()
+    print ('rogues')
+    nrogue = input()
+    print ('shamans')
+    nshaman = input()
+    print ('warlocks')
+    nwarlock = input()
+    print ('warriors')
+    nwarrior = input()
+
+    classdistribution = [ndruid, nhunter, nmage, npaladin, npriest, nrogue, nshaman, nwarlock, nwarrior]
+    nraiders = sum(classdistribution)
+
+    if (nraiders > 25)
+         print ('too many raiders provided, exiting')
+         break
+    
+    assignclasses (classdistribution)
+
+
+    
+    print ('you provided')
+
+
+else : 
+    print ('unknown operation mode specified, exiting')
+
 
 
 
