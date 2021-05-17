@@ -148,7 +148,7 @@ def cslotval(item) :
         sval = 0.7
     elif slot in ['wrist','neck','back','finger','offhand','shield'] :
         sval = 5/9
-    elif slot in ['1h', 'ranged', 'wand'] :
+    elif slot in ['1h', 'ranged', 'wand', 'idol', 'totem'] :
         sval = 0.42
 
     if sval == 0 :
@@ -205,14 +205,19 @@ epkara = 150        # model parameter, set by user
 
 ## data containers
 
-epvector = []
-gpvector = []
-prvectpr = []
+epstart = []
+gpstart = []
+prstart = []
 
 for player in players : 
-    epvector.append(player['ep'])
-    epvector.append(player['ep'])
-    epvector.append(player['ep'])
+    epstart.append(player['ep'])
+    gpstart.append(player['gp'])
+    prstart.append(player['pr'])
+
+epvector = [epstart]
+gpvector = [gpstart]
+prvector = [prstart]
+
 
 ### automatic mode
 
@@ -254,6 +259,29 @@ for run in range(runs) :
         for player in players : 
             player['pr'] = player['ep'] / player['gp']
 
+    # decay ep and gp
+    for player in players :
+        player['ep'] *= 0.9
+    
+    for player in players :
+        player['ep'] *= 0.9
+
+    # update pr
+    for player in players : 
+        player['pr'] = player['ep'] / player['gp']
+
+    currenteps = []
+    currentgps = []
+    currentprs = []
+
+    for player in players : 
+        currenteps.append(player['ep'])
+        currentgps.append(player['gp'])
+        currentprs.append(player['pr'])
+
+    epvector.append(currenteps)
+    gpvector.append(currentgps)
+    prvector.append(currentprs)
 
 #    bossdowns = []
 #    
@@ -286,7 +314,8 @@ for run in range(runs) :
 #        for player in players : 
 #            player['pr'] = player['ep'] / player['gp']
             
-            
+           
+
     
 
 ### manual mode
@@ -303,9 +332,24 @@ fplayers.write(json.dumps(players))
 
 # save ep, gp, pr data
 
-np.savetxt('ep.txt',epvector,delimiter=',')
-np.savetxt('gp.txt',gpvector,delimiter=',')
-np.savetxt('pr.txt',prvector,delimiter=',')
+#print (epvector)
+#print (gpvector)
+#print (prvector)
+
+#with open('eps.txt', 'w') as f:
+#    for item in epvector:
+#        f.write("%s\n" % item)
+
+#feps = open('eps.txt', 'w+')
+#feps.write(json.dump(epvector))
+
+epvector = np.array(epvector)
+gpvector = np.array(epvector)
+prvector = np.array(epvector)
+
+np.savetxt('eps.txt',epvector,delimiter=',')
+np.savetxt('gps.txt',gpvector,delimiter=',')
+np.savetxt('prs.txt',prvector,delimiter=',')
 
 
 
