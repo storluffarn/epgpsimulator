@@ -76,58 +76,6 @@ for lootfile in lootfiles :
     lootdata.append(bossloot)
     lootfile.close()
 
-#print (lootdata)
-
-#lootdata = []
-#
-#for bossdata in lootraw :
-#    bossloot = []
-#    for data in bossdata :
-#    
-#        item['id'] = data[0]
-#        item['name'] = data[1]
-#        item['slot'] = data[2]
-#        item['level'] = data[3]
-#        item['droprate'] = data[4]
-#    
-#        bossloot.append(item)
-#
-#    lootdata.append(bossloot)
-
-#print (lootdata)
-
-#attumenraw = np.loadtxt('./lootattumen.csv',delimiter=',')
-#
-#attumenloot = [];
-#
-#for data in attumenraw :
-#    item = dict.fromkeys(itemkeys)
-#
-#    item['id'] = data[0]
-#    item['name'] = data[1]
-#    item['slot'] = data[2]
-#    item['level'] = data[3]
-#    item['droprate'] = data[4]
-#
-#    attumenloot.append(item)
-#
-#moroesraw = np.loadtxt('./lootmoroes.csv',delimiter=',')
-#
-#moroesloot = [];
-#
-#for data in moroesraw :
-#    item = dict.fromkeys(keys)
-#
-#    item['id'] = data[0]
-#    item['name'] = data[1]
-#    item['slot'] = data[2]
-#    item['level'] = data[3]
-#    item['droprate'] = data[4]
-#
-#    moroesloot.append(item)
-
-#lootdata = [attumen]
-
 ## functions
 
 def citemval(item) :           # calculate itemvalue
@@ -283,40 +231,7 @@ for run in range(runs) :
     gpvector.append(currentgps)
     prvector.append(currentprs)
 
-#    bossdowns = []
-#    
-#    for kill in range(kills) :
-#        bossdowns.append(1)
-#
-#    
-#    # boss kills
-#    if (bossdowns[0] == 1) :        # attumen was killed
-#        drop1id = rn.randint(1,len(attumenloot))
-#        drop2id = rn.randint(1,len(attumenloot))
-#        
-#        drop1 = attumenloot[drop1id]
-#        drop2 = attumenloot[drop2id]
-#        drops = [drop1, drop2]
-#
-#        # who gets loot
-#        looters = autoloot(players)
-#
-#        # distribute loot
-#        for looter in looters :
-#            lootgp = cgp(drops[looter])
-#            players[looter]['gp'] =+ lootgp
-#
-#        # update ep
-#        for player in players :
-#            player['ep'] += epkara
-#
-#        # update pr
-#        for player in players : 
-#            player['pr'] = player['ep'] / player['gp']
             
-           
-
-    
 
 ### manual mode
 
@@ -331,17 +246,6 @@ fplayers = open('players.txt', 'w+')
 fplayers.write(json.dumps(players))
 
 # save ep, gp, pr data
-
-#print (epvector)
-#print (gpvector)
-#print (prvector)
-
-#with open('eps.txt', 'w') as f:
-#    for item in epvector:
-#        f.write("%s\n" % item)
-
-#feps = open('eps.txt', 'w+')
-#feps.write(json.dump(epvector))
 
 epvector = np.array(epvector)
 gpvector = np.array(epvector)
