@@ -269,21 +269,23 @@ modeselect = input()
 if modeselect == 'auto' :
     
     runs = 10
-    cprog = 1.5                 # progress factor
+    cprog = 2.5                 # progress factor
     kills = 1
-    maxkills = 2
+    maxkills = 8
     
+    bosscounter = 0
     for run in range(runs) :     
         
         # generate a progressive random amount of kills
         kills = round(0.5*runs + np.random.normal(0,1))
         if kills < 0 :
             kills = 0
-        elif kills > maxkills :
+        elif kills >= maxkills :
             kills = maxkills
         
         for kill in range(kills) :
             
+            bosscounter += 1
             # generate drops
             boss = lootdata[kill]
             drops = generatedrops(boss)
@@ -311,7 +313,7 @@ if modeselect == 'auto' :
             player['ep'] *= 0.9
         
         for player in players :
-            player['ep'] *= 0.9
+            player['gp'] *= 0.9
     
         # update pr
         for player in players : 
@@ -329,6 +331,8 @@ if modeselect == 'auto' :
         epvector.append(currenteps)
         gpvector.append(currentgps)
         prvector.append(currentprs)
+
+        print (bosscounter)
 
 ### manual mode
 elif modeselect == 'manual' :
