@@ -4,11 +4,12 @@
 ####################################
 
 # code by storluffarn
-
+#
 # get the latest version at 
 # github/storluffarn/epgpsimulator
-
-
+#
+# dependencies: numpy
+#
 # TODO 
 #
 # * consider making players and items into dicts of dicts
@@ -100,11 +101,11 @@ def cslotval(item) :
         sval = 1
     elif slot in ['shoulder','hands','waist','feet'] :
         sval = 7/9
-    elif slot in ['tinkret'] :
+    elif slot in ['trinket'] :
         sval = 0.7
     elif slot in ['wrist','neck','back','finger','offhand','shield'] :
         sval = 5/9
-    elif slot in ['1h', 'ranged', 'wand', 'relic'] :
+    elif slot in ['1h', 'ranged', 'wand', 'relic', 'thrown'] :
         sval = 0.42
 
     if sval == 0 :
@@ -330,7 +331,7 @@ if modeselect == 'auto' :
         gpvector.append(currentgps)
         prvector.append(currentprs)
 
-        print (bosscounter)
+#        print (bosscounter)
 
 ### manual mode
 elif modeselect == 'manual' :
