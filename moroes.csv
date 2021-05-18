@@ -1,14 +1,14 @@
 id,name,slot,itemlevel,droprate
-1,"shadow cloak of dalaran",back,115,20
-2,"boots of valiance",feet,115,20
-3,"moroes lycky pocket watch",tinkret,115,20
-4,"earthsoul leggings",legs,115,13
-5,"emerald ripper",1h,115,13
-6,"nethershard girdle",waist,115,13
-7,"royal cloak of arathi kings",back,115,13
-8,"belt of gale force",waist,115,6
-9,"broch of unquenchable fury",neck,115,6
-10,"chrimson girdle of the idom",waist,115,6
-11,"edgewalker longboots",feet,115,6
-12,"idol of the avian heart",idol,115,6
-13,"signet of unshakable faith",offhand,115,6
+1,"shadow cloak of dalaran",back,cloak,115,20
+2,"boots of valiance",feet,plate,115,20
+3,"moroes lycky pocket watch",trinket,trinket,115,20
+4,"earthsoul leggings",legs,leather,115,13
+5,"emerald ripper",1h,dagger,115,13
+6,"nethershard girdle",waist,cloth,115,13
+7,"royal cloak of arathi kings",back,cloak,115,13
+8,"belt of gale force",waist,mail,115,6
+9,"broch of unquenchable fury",neck,amulet,115,6
+10,"chrimson girdle of the idom",waist,plate,115,6
+11,"edgewalker longboots",feet,leather,115,6
+12,"idol of the avian heart",relic,idol,115,6
+13,"signet of unshakable faith",offhand,ofhand,115,6

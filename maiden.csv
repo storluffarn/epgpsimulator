@@ -1,13 +1,13 @@
 id,name,slot,itemlevel,droprate
-1,"gloves of quickening",hands,115,33
-2,"bracers of maliciousness",wrist,115,20
-3,"barbed choker of disciplin",neck,115,13
-4,"boots of foretelling",feet,115,13
-5,"bracers of justice",wrist,115,13
-6,"gloves of centering",hands,115,13
-7,"iron gauntlets of the maiden",hands,115,13
-8,"mits of the treemender",hands,115,13
-9,"shard of the virtuous",1h,115,13
-10,"totem of healing rains",ranged,115,13
-11,"bands of indwelling",wrist,115,7
-12,"bands of nefarious deeds",wrist,115,7
+1,"gloves of quickening",hands,mail,115,33
+2,"bracers of maliciousness",wrist,leather,115,20
+3,"barbed choker of disciplin",neck,amulet,115,13
+4,"boots of foretelling",feet,cloth,115,13
+5,"bracers of justice",wrist,plate,115,13
+6,"gloves of centering",hands,mail,115,13
+7,"iron gauntlets of the maiden",hands,plate,115,13
+8,"mitts of the treemender",hands,leather,115,13
+9,"shard of the virtuous",1h,mace,115,13
+10,"totem of healing rains",relic,totem,115,13
+11,"bands of indwelling",wrist,cloth,115,7
+12,"bands of nefarious deeds",wrist,cloth,115,7

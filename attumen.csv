@@ -1,13 +1,13 @@
 id,name,slot,itemlevel,droprate
-1,"gloves of saintly blessing",hands,115,16
-2,"bracers of the white stag",wrist,115,16
-3,"steelhawk crossbow",ranged,115,16
-4,"vambraces of courage",wrist,115,16
-5,"whirlwind bracers",wrist,115,16
-6,"gauntlets of renewed hope",hands,115,16
-7,"handwraps of flowing thought",hands,115,16
-8,"harbringer bands",wrist,115,16
-9,"gloves of dexterous manipulation",hands,115,5
-10,"spectral band of innervation",neck,115,5
-11,"stalkers war bands",wrist,115,5
-12,"worgen claw neckless",neck,115,5
+1,"gloves of saintly blessing",hands,cloth,115,16
+2,"bracers of the white stag",wrist,wrist,115,16
+3,"steelhawk crossbow",ranged,crossbow,115,16
+4,"vambraces of courage",wrist,plate,115,16
+5,"whirlwind bracers",wrist,mail,115,16
+6,"gauntlets of renewed hope",hands,plate,115,16
+7,"handwraps of flowing thought",hands,cloth,115,16
+8,"harbringer bands",wrist,cloth,115,16
+9,"gloves of dexterous manipulation",hands,leather,115,5
+10,"spectral band of innervation",finger,ring,115,5
+11,"stalkers war bands",wrist,mail,115,5
+12,"worgen claw neckless",neck,amulet,115,5

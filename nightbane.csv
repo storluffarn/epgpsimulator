@@ -1,13 +1,13 @@
 id,name,slot,itemlevel,droprate
-1,"chestguard of the conniever",chest,115,29
-2,"panzarthar breatsplate",chest,115,29
-3,"dragonheart flameshield",shield,115,14
-4,"emberspur talisman",neck,115,14
-5,"furious swift-nickers",feet,115,14
-6,"ironstriders of urgency",feet,115,14
-7,"nightstaff of the everliving",2h,115,14
-8,"robe of the elder scribes",chest,115,14
-9,"scaled breastplate of carnage",chest,115,14
-10,"shield of impenetrable darkness",shield,115,14
-11,"stonebough jerkin",chest,115,14
-12,"talisman of nightbane",offhand,115,14
+1,"chestguard of the conniever",chest,leather,115,29
+2,"panzarthar breatsplate",chest,plate,115,29
+3,"dragonheart flameshield",shield,shield,115,14
+4,"emberspur talisman",neck,amulet,115,14
+5,"furious swift-nickers",feet,mail,115,14
+6,"ironstriders of urgency",feet,plate,115,14
+7,"nightstaff of the everliving",2h,staff,115,14
+8,"robe of the elder scribes",chest,cloth,115,14
+9,"scaled breastplate of carnage",chest,mail,115,14
+10,"shield of impenetrable darkness",shield,shield,115,14
+11,"stonebough jerkin",chest,leather,115,14
+12,"talisman of nightbane",offhand,offhand,115,14

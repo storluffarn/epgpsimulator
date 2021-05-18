@@ -75,14 +75,12 @@ for lootfile in lootfiles :
             item['id'] = int(line[0])
             item['name'] = line[1]
             item['slot'] = line[2]
-            item['type'] = 'empty'
-            item['level'] = int(line[3])
-            item['droprate'] = 0.01 * int(line[4])
+            item['type'] = line[3]
+            item['level'] = int(line[4])
+            item['droprate'] = 0.01 * int(line[5])
             
-#            print(item)
             bossloot.append(item)
 
-#    print (lootfile)
     lootdata.append(bossloot)
     lootfile.close()
 
@@ -106,7 +104,7 @@ def cslotval(item) :
         sval = 0.7
     elif slot in ['wrist','neck','back','finger','offhand','shield'] :
         sval = 5/9
-    elif slot in ['1h', 'ranged', 'wand', 'idol', 'totem'] :
+    elif slot in ['1h', 'ranged', 'wand', 'relic'] :
         sval = 0.42
 
     if sval == 0 :
