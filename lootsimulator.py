@@ -52,34 +52,9 @@ players += healers
 players += melees
 players += rangeds
 
-#elif (qdef == 'no'):
-#    playerkeys = ['id','name','class','note','ep','gp','pr','loot']
-#
-#    input 
-#    nplayers = 25
-#    players = []
-#
-#    for n in range(nplayers) : 
-#        player = dict.fromkeys(playerkeys)
-#    
-#        player['id'] = n
-#        player['name'] = 'raider' + str(n)
-#        player['ep'] = 150
-#        player['gp'] = 150
-#        player['pr'] = 1
-#        player['loot'] = []
-#
-#        players.append(player)
-#
-#else :
-#    print ('bad choise, exiting')
-#    exit()
-
 ## load loot data
 
 itemkeys = ['id','name','slot','type','level','droprate']
-
-#attumenraw = np.loadtxt('./attumen.csv',delimiter=',',skiprows=1)
 
 lootfiles = ['./attumen.csv',
 './moroes.csv',
@@ -302,7 +277,7 @@ modeselect = input()
 ### automatic mode
 if modeselect == 'auto' :
     
-    runs = 10
+    runs = 25
     cprog = 2.5                 # progress factor
     kills = 1
     maxkills = 8
@@ -370,41 +345,6 @@ if modeselect == 'auto' :
 
 ### manual mode
 elif modeselect == 'manual' :
-
-    #    if (qdef == 'yes')
-    #        print ('defaulting to two raid teams randomly sampled from playerfiles')
-    #    else :
-    #        print ('initializing raid setup... \n\nplease provide the number of')
-    #        print ('druids: ')
-    #        ndruid = int(input())
-    #        print ('hunters: ')
-    #        nhunter = int(input())
-    #        print ('mages: ')
-    #        nmage = int(input())
-    #        print ('paladins: ')
-    #        npaladin = int(input())
-    #        print ('priests: ')
-    #        npriest = int(input())
-    #        print ('rogues: ')
-    #        nrogue = int(input())
-    #        print ('shamans: ')
-    #        nshaman = int(input())
-    #        print ('warlocks: ')
-    #        nwarlock = int(input())
-    #        print ('warriors: ')
-    #        nwarrior = int(input())
-    #
-    #        classdistribution = [ndruid, nhunter, nmage, npaladin, npriest, nrogue, nshaman, nwarlock, nwarrior]
-    #        nraiders = sum(classdistribution)
-#
-#        
-#
-#    if (nraiders > 25) :
-#         print ('too many raiders provided, exiting')
-#         exit()
-#
-#    assignclasses (classdistribution)
-
     
     modswitch = True 
     while modswitch :

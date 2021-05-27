@@ -112,47 +112,47 @@ print (hunterprs)
 figdruids, ax = plt.subplots()
 for prdata in druidprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 fighunters, ax = plt.subplots()
 for prdata in hunterprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 figmages, ax = plt.subplots()
 for prdata in mageprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 figpaladins, ax = plt.subplots()
 for prdata in paladinprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 figpriests, ax = plt.subplots()
 for prdata in priestprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 figrogues, ax = plt.subplots()
 for prdata in rogueprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 figshamans, ax = plt.subplots()
 for prdata in shamanprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 figwarlocks, ax = plt.subplots()
 for prdata in warlockprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 figwarriors, ax = plt.subplots()
 for prdata in warriorprs :
     ax.plot(prdata)
-    ax.set_ylim([0,10])
+    ax.set_ylim([0,20])
 
 
 
