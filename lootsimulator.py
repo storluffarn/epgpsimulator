@@ -6,20 +6,24 @@
 # code by storluffarn
 #
 # get the latest version at 
-# github/storluffarn/epgpsimulator
+# github.com/storluffarn/epgpsimulator
 #
 # dependencies: numpy
 #
 # TODO 
 #
 # * consider making players and items into dicts of dicts
-# * add a read raid data from file feature
+# * add a read raid data from file feature (DONE)
 # * fix the error handling during the manual mode menu navigation:
 #     * inconsistant messages
-#     * no error handling
+#     * instances of no error handling
 #     * ugly error handling
-# * make automatic mode more realistic
-# * make it such that size of player vector is set by raid composition
+# * make automatic mode actually useful
+# * make it so that number of players and raids are dynamically set
+# * investigate how python deals with there being no pointers...
+#   right now the whole roles --> players --> raiders -- roles -->
+#   chain is nothing short of hidious
+# * adda feature to modify raids after they have been seeded
 #
 
 
@@ -32,22 +36,44 @@ import json
 
 ## objects
 
-playerkeys = ['id','name','class','note','ep','gp','pr','loot']
+with open('tanks.txt', 'r') as tankfile :
+    tanks = json.load(tankfile)
+with open('healers.txt', 'r') as healerfile :
+    healers = json.load(healerfile)
+with open('meleedps.txt', 'r') as meleefile :
+    melees = json.load(meleefile)
+with open('rangeddps.txt', 'r') as rangedfile :
+    rangeds = json.load(rangedfile)
 
-nplayers = 25
 players = []
 
-for n in range(nplayers) : 
-    player = dict.fromkeys(playerkeys)
-    
-    player['id'] = n
-    player['name'] = 'raider' + str(n)
-    player['ep'] = 1
-    player['gp'] = 1
-    player['pr'] = 1
-    player['loot'] = []
+players += tanks
+players += healers 
+players += melees
+players += rangeds
 
-    players.append(player)
+#elif (qdef == 'no'):
+#    playerkeys = ['id','name','class','note','ep','gp','pr','loot']
+#
+#    input 
+#    nplayers = 25
+#    players = []
+#
+#    for n in range(nplayers) : 
+#        player = dict.fromkeys(playerkeys)
+#    
+#        player['id'] = n
+#        player['name'] = 'raider' + str(n)
+#        player['ep'] = 150
+#        player['gp'] = 150
+#        player['pr'] = 1
+#        player['loot'] = []
+#
+#        players.append(player)
+#
+#else :
+#    print ('bad choise, exiting')
+#    exit()
 
 ## load loot data
 
@@ -63,6 +89,11 @@ lootfiles = ['./attumen.csv',
 './netherspite.csv',
 './nightbane.csv',
 './princemalchezaar.csv']
+
+tankfile = 'tanks.tex'
+healerfile = 'healers.tex'
+meleefile = 'meleedps.tex'
+reangedfile = 'rangeddpss.tex'
 
 lootdata = []
 
@@ -235,9 +266,9 @@ def checkrange (lower,upper,test) :
        print ('error: expected {} to be in range {} to {}'.format(test,lower,upper))
        return False
 
-def listplayers () :
-    for player in players :
-        print (player)
+def listplayers (raiders) :
+    for raider in raiders :
+        print (raider)
 
 ## global constantsi
 
@@ -259,6 +290,10 @@ for player in players :
 epvector = [epstart]
 gpvector = [gpstart]
 prvector = [prstart]
+
+### "main"
+
+print ("welcome to the loot simulator! please mind your input format, error handling is not completely implemented yet\n")
 
 print("specify mode: 'auto' or 'manual'")
 
@@ -335,38 +370,45 @@ if modeselect == 'auto' :
 
 ### manual mode
 elif modeselect == 'manual' :
-    print ('initializing raid setup... \n\nplease provide the number of')
-    print ('druids: ')
-    ndruid = int(input())
-    print ('hunters: ')
-    nhunter = int(input())
-    print ('mages: ')
-    nmage = int(input())
-    print ('paladins: ')
-    npaladin = int(input())
-    print ('priests: ')
-    npriest = int(input())
-    print ('rogues: ')
-    nrogue = int(input())
-    print ('shamans: ')
-    nshaman = int(input())
-    print ('warlocks: ')
-    nwarlock = int(input())
-    print ('warriors: ')
-    nwarrior = int(input())
 
-    classdistribution = [ndruid, nhunter, nmage, npaladin, npriest, nrogue, nshaman, nwarlock, nwarrior]
-    nraiders = sum(classdistribution)
+    #    if (qdef == 'yes')
+    #        print ('defaulting to two raid teams randomly sampled from playerfiles')
+    #    else :
+    #        print ('initializing raid setup... \n\nplease provide the number of')
+    #        print ('druids: ')
+    #        ndruid = int(input())
+    #        print ('hunters: ')
+    #        nhunter = int(input())
+    #        print ('mages: ')
+    #        nmage = int(input())
+    #        print ('paladins: ')
+    #        npaladin = int(input())
+    #        print ('priests: ')
+    #        npriest = int(input())
+    #        print ('rogues: ')
+    #        nrogue = int(input())
+    #        print ('shamans: ')
+    #        nshaman = int(input())
+    #        print ('warlocks: ')
+    #        nwarlock = int(input())
+    #        print ('warriors: ')
+    #        nwarrior = int(input())
+    #
+    #        classdistribution = [ndruid, nhunter, nmage, npaladin, npriest, nrogue, nshaman, nwarlock, nwarrior]
+    #        nraiders = sum(classdistribution)
+#
+#        
+#
+#    if (nraiders > 25) :
+#         print ('too many raiders provided, exiting')
+#         exit()
+#
+#    assignclasses (classdistribution)
 
-    if (nraiders > 25) :
-         print ('too many raiders provided, exiting')
-         exit()
     
-    assignclasses (classdistribution)
-
     modswitch = True 
     while modswitch :
-        print ("inspect and modify roster (enter 'help' for guidance), enter 'finished' to continue")
+        print ("inspect and modify raiders (enter 'help' for guidance), enter 'finished' to continue")
         choise = input()
         if choise == 'help' : 
             print ('list of supported functionalities:')
@@ -394,7 +436,11 @@ elif modeselect == 'manual' :
                     choise2 = False
                     continue 
                 
-                raiderid = int(raiderid)
+                if (checkint(raiderid)) :
+                    raiderid = int(raiderid)
+                else :
+                    continue
+
                 if raiderid >= 0 and raiderid <= 24 :
                 
                     print ("what would you like to change ('name','class','ep','gp','pr','note')?")
@@ -415,112 +461,185 @@ elif modeselect == 'manual' :
 
     print ('raid composition successful! \ninitiating raid interface...\n')
 
+
     raiding = True
     raidcounter = 0
     bosscounter = 0
     while raiding :
-
-        wait = True 
-        while wait :
-            
-            print('new raid started, how many bosses goes down (0 - 8)?')
-            bosskills = input()
-            if (checkint(bosskills)) :
-                bosskills = int(bosskills)
-                if (checkrange(0,8,bosskills)) :
-                    wait = False
-                else : continue
-            else : continue
         
-        for kill in range(bosskills) :
-            
-            bosscounter += 1
-            bossloot = lootdata[kill]
-            drops = generatedrops(bossloot)
-            
-            bossname = numtoboss(kill)
-            print ('\n{} was killed, the loot was:'.format(bossname))
-            print ('{} ({} {}) \nand \n{} ({} {})'.format(drops[0]['name'],drops[0]['slot'],drops[0]['type'],drops[1]['name'],drops[1]['slot'],drops[1]['type']))
-            
-            lootgp1 = cgp(drops[0])
-            lootgp2 = cgp(drops[1])
-            
-            wait = True
-            while wait :
-                print ("who got {} (enter 'listraid' to see raider info)?".format(drops[0]['name']))
-                looterid = input()
-                if (looterid == 'listraid') :
-                    listplayers()
-                if (checkint(looterid)) :
-                    looterid = int(looterid)
-                    if (checkrange(0,len(players) - 1,looterid)) :
-                        print ("what was the EP spending factor ('1': 100%, '2': 80%, '3': 50%, '4': 10%)?")
-                        gpchoise = input()
-                        if (checkint(gpchoise)) :
-                            gpchoise = int(gpchoise)
-                            if (checkrange(0,4,gpchoise)) :
-                                gpfactor = getgpfactor(gpchoise)
-                                players[looterid]['gp'] += gpfactor*lootgp1
-                                players[looterid]['loot'].append(drops[0]['name'])
-                                wait = False
-                            else :
-                                continue
-                        else :
-                            continue
-                    else : 
-                        continue
-                else :
-                    continue
+        print('seeding raid teams 1 and 2 from player pool...')
 
-            wait = True
+        picktanks = np.random.choice(tanks,4,0)
+        pickhealers = np.random.choice(healers,6,0)
+        pickmelees = np.random.choice(melees,4,0)
+        pickrangeds = np.random.choice(rangeds,6,0)
+
+        raid1 = []
+        raid1 += picktanks[0:2].tolist()
+        raid1 += pickhealers[0:3].tolist()
+        raid1 += pickmelees[0:2].tolist()
+        raid1 += pickrangeds[0:3].tolist()
+        
+        raid2 = []
+        raid2 += picktanks[2:4].tolist()
+        raid2 += pickhealers[3:6].tolist()
+        raid2 += pickmelees[2:4].tolist()
+        raid2 += pickrangeds[3:6].tolist()
+
+        raid1 = sorted(raid1, key = lambda k : k['id'])
+        raid2 = sorted(raid2, key = lambda k : k['id'])
+
+        raids = [raid1, raid2]
+        
+        raidid = 0
+
+        for raid in raids :
+
+            raidid += 1
+            print ('raid {} is entering karazhan!\n'.format(raidid))
+            wait = True 
             while wait :
-                print ("who got {} (enter 'listraid' to see raider info)?".format(drops[1]['name']))
-                looterid = input()
-                if (looterid == 'listraid') :
-                    listplayers()
-                if (checkint(looterid)) :
-                    looterid = int(looterid)
-                    if (checkrange(0,len(players) - 1,looterid)) :
-                        print ("what was the EP spending factor ('1': 100%, '2': 80%, '3': 50%, '4': 10%)?")
-                        gpchoise = input()
-                        if (checkint(gpchoise)) :
-                            gpchoise = int(gpchoise)
-                            if (checkrange(0,4,gpchoise)) :
-                                gpfactor = getgpfactor(gpchoise)
-                                players[looterid]['gp'] += gpfactor*lootgp2
-                                players[looterid]['loot'].append(drops[1]['name'])
-                                wait = False
+                
+                print('how many bosses goes down (0 - 8)?')
+                bosskills = input()
+                if (checkint(bosskills)) :
+                    bosskills = int(bosskills)
+                    if (checkrange(0,8,bosskills)) :
+                        wait = False
+                    else : continue
+                else : continue
+            
+            for kill in range(bosskills) :
+                
+                bosscounter += 1
+                bossloot = lootdata[kill]
+                drops = generatedrops(bossloot)
+                
+                bossname = numtoboss(kill)
+                print ('\n{} was killed, the loot was:'.format(bossname))
+                print ('{} ({} {}) \nand \n{} ({} {})'.format(drops[0]['name'],drops[0]['slot'],drops[0]['type'],drops[1]['name'],drops[1]['slot'],drops[1]['type']))
+                
+                lootgp1 = cgp(drops[0])
+                lootgp2 = cgp(drops[1])
+                
+                wait = True
+                while wait :
+                    print ("who got {} (enter 'listraid' to see raider info)?".format(drops[0]['name']))
+                    looterid = input()
+                    if (looterid == 'listraid') :
+                        listplayers(raid)
+                    elif (checkint(looterid)) :
+                        looterid = int(looterid)
+                        if (checkrange(0,len(players) - 1,looterid)) :
+                            print ("what was the GP factor ('1': 100%, '2': 80%, '3': 50%, '4': 10%)?")
+                            gpchoise = input()
+                            if (checkint(gpchoise)) :
+                                gpchoise = int(gpchoise)
+                                if (checkrange(0,4,gpchoise)) :
+                                    gpfactor = getgpfactor(gpchoise)
+                                    players[looterid]['gp'] += gpfactor*lootgp1
+                                    players[looterid]['loot'].append(drops[0]['name'])
+                                    wait = False
+                                else :
+                                    continue
                             else :
                                 continue
-                        else :
+                        else : 
                             continue
-                    else : 
+                    else :
                         continue
-                else :
-                    continue
-           
-            # update ep
-            for player in players :
-                player['ep'] += epkara
+
+                wait = True
+                while wait :
+                    print ("who got {} (enter 'listraid' to see raider info)?".format(drops[1]['name']))
+                    looterid = input()
+                    if (looterid == 'listraid') :
+                        listplayers(raid)
+                    elif (checkint(looterid)) :
+                        looterid = int(looterid)
+                        if (checkrange(0,len(players) - 1,looterid)) :
+                            print ("what was the GP spending factor ('1': 100%, '2': 80%, '3': 50%, '4': 10%)?")
+                            gpchoise = input()
+                            if (checkint(gpchoise)) :
+                                gpchoise = int(gpchoise)
+                                if (checkrange(0,4,gpchoise)) :
+                                    gpfactor = getgpfactor(gpchoise)
+                                    players[looterid]['gp'] += gpfactor*lootgp2
+                                    players[looterid]['loot'].append(drops[1]['name'])
+                                    wait = False
+                                else :
+                                    continue
+                            else :
+                                continue
+                        else : 
+                            continue
+                    else :
+                        continue
+               
+                # update ep
+                for player in raid :
+                    player['ep'] += epkara
     
-            # update pr
-            for player in players : 
-                player['pr'] = player['ep'] / player['gp']
+                # update pr
+                for player in raid : 
+                    player['pr'] = player['ep'] / player['gp']
 
         raidcounter += 1
         print ('raid finished! in total {} raids have been simulated, totaling {} boss kills'.format(raidcounter,bosscounter))
         print ('applying ep and gp decays and updating post-raid pr values...')
     
+        # this is why we cant have nice things (signed the pointer gang)
+        
+        raidid = -1
+        for raid in raids :
+            raidid += 1
+            for player in players :
+                for raider in raid :
+                    if raider.get('id') == player.get('id') :
+                        players[raider.get('id')] = raider
+        
         # decay ep and gp
         for player in players :
             player['ep'] *= epdecayrate
         
         for player in players :
-            player['ep'] *= gpdecayrate
+            player['gp'] *= gpdecayrate
     
         # update pr
         for player in players : 
-            player['pr'] = player['ep'] / player['gp']
+            player['pr'] = player['ep'] / player['gp']        
+        
+        for player in players :
+            if player.get('role') == 'tank' :
+                roleid = -1
+                for tank in tanks :
+                    roleid += 1
+                    if tank.get('name') == player.get('name') :
+                        tanks[roleid] = player
+
+        for player in players :
+            if player.get('role') == 'healer' :
+                roleid = -1
+                for healer in healers :
+                    roleid += 1
+                    if healer.get('name') == player.get('name') :
+                        healers[roleid] = player
+
+        for player in players :
+            if player.get('role') == 'melee' :
+                roleid = -1
+                for melee in melees :
+                    roleid += 1
+                    if melee.get('name') == player.get('name') :
+                        melees[roleid] = player
+        
+        for player in players :
+            if player.get('role') == 'healer' :
+                roleid = -1
+                for ranged in rangeds :
+                    roleid += 1
+                    if ranged.get('name') == player.get('name') :
+                        rangeds[roleid] = player
     
         # save raid progress
         currenteps = []

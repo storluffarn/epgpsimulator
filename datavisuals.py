@@ -8,7 +8,7 @@ epsraw = np.loadtxt('eps.txt',delimiter=',')
 gpsraw = np.loadtxt('gps.txt',delimiter=',')
 prsraw = np.loadtxt('prs.txt',delimiter=',')
 
-with open('tmp.txt', 'r') as playersfile :
+with open('players.txt', 'r') as playersfile :
     players = json.load(playersfile)
 
 # find classes
